@@ -1,5 +1,6 @@
 import { User } from './User';
-
+import { Background } from './Background';
+import { Layout } from './Layout';
 
 /**
  * This is an abstract tool (like erasing, drawing, drawing a line, rectangle, drawing a circle)
@@ -27,6 +28,17 @@ export abstract class Tool {
     setToolCursorImage(srcImage: { data: string, x: number, y: number }): void {
         document.getElementById("canvas").style.cursor = `url(${srcImage.data}) ${srcImage.x} ${srcImage.y}, auto`;
         // this.toolCursor.src = srcImage;
+    }
+
+    /** 
+     * snaps number to grid, coord is true for x snapping, false for y
+     */
+    snap(x: number, coord: boolean): number {
+        const size : number = (coord) ? Layout.getWindowWidth() : Layout.getWindowHeight();
+        const grid : number = (coord) ? Background.gridx : Background.gridy;
+        console.log("grid :", grid);
+        console.log("size :", size);
+        return size*Math.round((x*grid)/size)/grid;
     }
 
     updateCursor(): void {

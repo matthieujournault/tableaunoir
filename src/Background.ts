@@ -25,6 +25,16 @@ export class Background {
         return Background.dataURL != undefined;
     }
 
+    static gridy: number = undefined;
+    static gridx: number = undefined;
+
+    static init_grid(): void {
+        this.gridy=18;
+        const fullHeight = Layout.getWindowHeight();
+        const fullWidth = Layout.getWindowWidth();
+        const yshift = fullHeight / this.gridy;
+        this.gridx = 2 * Math.round(fullWidth / (2 * yshift));
+    }
     /**
      * initialize the interface
      */
@@ -39,11 +49,10 @@ export class Background {
             Share.execute("backgroundGrid", []);
         };
 
-
         (<HTMLInputElement>document.getElementById("inputBackground")).onchange = function (evt) {
             LoadSave.fetchFromFile((<HTMLInputElement>evt.target).files[0],
                 (dataURL) => Share.execute("setBackground", [dataURL]));
-        }
+        };
     }
 
 
@@ -130,24 +139,23 @@ export class Background {
 
     static grid(): void {
         Background.clear();
-        const gridy = 18;
-
+        this.init_grid();
         const COLORGRID = "rgb(50, 50, 50)";
         const PRESSURE = 0.1;
         const fullHeight = Layout.getWindowHeight();
         const fullWidth = Layout.getWindowWidth();
         const canvasBackground = getCanvasBackground();
         const x2 = 2 * Layout.getWindowWidth();
-        const yshift = fullHeight / gridy;
-        const gridx = 2 * Math.round(fullWidth / (2 * yshift));
-        const xshift = fullWidth / gridx;
+        const yshift = fullHeight / this.gridy;
+        this.gridx = 2 * Math.round(fullWidth / (2 * yshift));
+        const xshift = fullWidth / this.gridx;
 
 
-        for (let i = 0; i <= gridy; i++) {
+        for (let i = 0; i <= this.gridy; i++) {
             const y = i * yshift;
             Drawing.drawLine(canvasBackground.getContext("2d"), 0, y, x2, y, PRESSURE, COLORGRID);
         }
-        for (let j = 0; j <= 2 * gridx; j++) {
+        for (let j = 0; j <= 2 * this.gridx; j++) {
             const x = j * xshift;
             Drawing.drawLine(canvasBackground.getContext("2d"), x, 0, x, fullHeight, PRESSURE, COLORGRID);
         }

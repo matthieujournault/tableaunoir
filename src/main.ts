@@ -20,6 +20,7 @@ import { Menu } from './Menu';
 import { TouchScreen } from './TouchScreen';
 import { ShareEvent } from './ShareEvent';
 import { Drawing } from './Drawing'
+import { ToolDraw } from './ToolDraw';
 
 window.onload = load;
 window['Menu'] = Menu;
@@ -222,7 +223,9 @@ function load() {
 		else if (evt.key == "p") { //p = print the current magnet
 			CircularMenu.hide();
 			Share.execute("printMagnet", [MagnetManager.getCurrentMagnetID()]);
-		}
+		} else if (evt.key == "s") { // s = snap mode
+        UserManager.me.toggleSnapMode();
+    }
 		else if (evt.key == "Delete" || evt.key == "x" || evt.key == "Backspace") { //supr = delete the current magnet
 			CircularMenu.hide();
 			/*if (lastDelineation.containsPolygonToMagnetize())

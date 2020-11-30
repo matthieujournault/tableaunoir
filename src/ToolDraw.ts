@@ -29,6 +29,7 @@ export class ToolDraw extends Tool {
 
     mousemove(evt: any): void {
         if (this.isDrawing) {
+            console.log("toto");
             const evtX = evt.offsetX;
             const evtY = evt.offsetY;
 
