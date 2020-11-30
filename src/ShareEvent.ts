@@ -37,6 +37,10 @@ export class ShareEvent {
         UserManager.users[userId].switchChalk();
     }
 
+    static toggleSnapMode(userId: string): void {
+        UserManager.users[userId].toggleSnapMode();
+    }
+
     static switchLine(userId: string): void {
         UserManager.users[userId].switchLine();
     }

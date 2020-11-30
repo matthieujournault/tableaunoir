@@ -224,7 +224,9 @@ function load() {
 			CircularMenu.hide();
 			Share.execute("printMagnet", [MagnetManager.getCurrentMagnetID()]);
 		} else if (evt.key == "s") { // s = snap mode
-        UserManager.me.toggleSnapMode();
+        if (UserManager.me.cantoggleSnapMode()) {
+            Share.execute("toggleSnapMode", [UserManager.me.userID]);
+        }
     }
 		else if (evt.key == "Delete" || evt.key == "x" || evt.key == "Backspace") { //supr = delete the current magnet
 			CircularMenu.hide();

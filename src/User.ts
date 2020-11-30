@@ -46,6 +46,10 @@ export class User {
 
     setCanWrite(bool: boolean): void { this.canWrite = bool; }
 
+    cantoggleSnapMode(): boolean {
+        return (this.snapmode || (!(typeof(Background.gridx) === 'undefined') && !(typeof(Background.gridy) === 'undefined') ))
+    }
+
     toggleSnapMode(): void {
         if (this.snapmode) {
             this.snapmode = false;
@@ -140,7 +144,6 @@ export class User {
     mousemove(evt): void {
         const evtX = (this.snapmode) ? this.tool.snap(evt.offsetX, true) : evt.offsetX;
         const evtY = (this.snapmode) ? this.tool.snap(evt.offsetY, false) : evt.offsetY;
-
         if (!this.isCurrentUser) {
             this.cursor.style.left = evtX - 8;
             this.cursor.style.top = evtY - 8;
